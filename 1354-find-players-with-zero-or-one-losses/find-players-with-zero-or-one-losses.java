@@ -3,7 +3,7 @@ class Solution {
         // Use TreeMap to keep keys sorted
         Map<Integer, Integer> loseCount = new TreeMap<>();
 
-        // Count losses, ensure winners appear too
+        
         for (int[] m : matches) {
             int w = m[0], l = m[1];
             loseCount.putIfAbsent(w, 0);
