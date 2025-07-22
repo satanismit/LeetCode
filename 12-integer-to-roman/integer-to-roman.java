@@ -13,6 +13,10 @@ class Solution {
 
         for(int i=0 ;i<13; i++){
 
+            if(num==0){
+                break;
+            }
+
             int times=num/val[i];
 
             while(times-->0){
