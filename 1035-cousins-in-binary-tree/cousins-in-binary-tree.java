@@ -23,11 +23,11 @@ class Solution {
         while(!q.isEmpty()){
 
             boolean foundX=false,foundY=false;
+
             int size=q.size();
             for(int i=0; i<size; i++){
 
                 TreeNode node=q.poll();
-
                 if(node.left!=null && node.right!=null){
 
             // check for same parents or not 
