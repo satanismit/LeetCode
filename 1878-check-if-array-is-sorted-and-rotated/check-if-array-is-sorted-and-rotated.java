@@ -13,6 +13,7 @@ class Solution {
             }
         }
 
+        //for first and last character 
         if(nums[n-1]>nums[0]){
             count++;
         }
