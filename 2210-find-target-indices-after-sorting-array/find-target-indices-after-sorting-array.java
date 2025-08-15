@@ -3,19 +3,33 @@ class Solution {
 
        List<Integer> list=new ArrayList<>();
 
-        Arrays.sort(nums);
-
-        int left=0,right=nums.length-1;
+       int smallcnt=0,targetcnt=0;
 
        for(int i=0; i<nums.length; i++){
 
-        if(nums[i]==target){
-                list.add(i);
-        }
-        
+         if(nums[i]<target){
+                smallcnt++;
+         }
+         if(nums[i]==target){
+
+              targetcnt++;
+         }
        }
 
-        return list;
+       for(int i=0; i<targetcnt; i++){
+
+                list.add(smallcnt++);
+
+       }
+
+
+       return list;
+
+
+
+       
+
+
 
     }
 }
