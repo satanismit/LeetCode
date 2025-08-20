@@ -15,45 +15,51 @@
  */
 class Solution {
 
-    Map<Integer,Integer> map=new HashMap<>();
+      private Integer curnum = null;
+    private int curfre=0;
+    private int maxfre=0;
+    List<Integer> ans=new ArrayList<>();
 
-    public void dfs(TreeNode root){
+    public void inorder(TreeNode root){
 
         if(root==null){
             return;
         }
 
-        dfs(root.left);
-        //add value and frequency into the map
-        map.put(root.val, map.getOrDefault(root.val,0)+1);
-        dfs(root.right);
-    }
+        inorder(root.left);
 
-    public int[] findMode(TreeNode root) {
-        
-        dfs(root);
-        List<Integer> ans=new ArrayList<>();
+       if (curnum!=null && curnum == root.val) {
 
-        int max=0;
+            curfre++;
+        } else {
 
-        for(Map.Entry<Integer,Integer> ele:map.entrySet()){
-
-            if(max<ele.getValue()){
-                ans.clear();
-                ans.add(ele.getKey());
-                max=ele.getValue();
-            }
-            else if(max==ele.getValue()){
-                ans.add(ele.getKey());
-            }
-
+            curnum = root.val;
+            curfre = 1;
         }
 
-        int[] arr=ans.stream()
-                     .mapToInt(Integer::intValue)
-                     .toArray();
+        if (curfre > maxfre) {
 
+            maxfre = curfre;
+            ans.clear();
+            ans.add(curnum);
 
-        return arr;
+        } else if (curfre == maxfre) {
+
+            ans.add(curnum);
+        }
+
+        inorder(root.right);
+
+    }
+    public int[] findMode(TreeNode root) {
+        
+    inorder(root);
+
+    int[] arr=ans.stream()
+                 .mapToInt(Integer::intValue) // map Integer object to primitive types 
+                 .toArray();                    //stream to array
+
+    return arr;
+
     }
 }
