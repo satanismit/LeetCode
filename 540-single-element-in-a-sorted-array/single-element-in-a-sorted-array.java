@@ -6,7 +6,6 @@ class Solution {
         if(n==1){
             return nums[0];
         }
-
         int left=0, right=n-1;
 
         while(left<=right){
