@@ -15,28 +15,25 @@
  */
 class Solution {
 
-    public int balance(TreeNode root){
+    public int check(TreeNode root){
 
-         if(root==null){
-            return 0;
-         }
-         
-        int left=balance(root.left);
+        if(root==null)  return 0;
+
+        int left= check(root.left);
         if(left==-1) return -1;
 
-        int right=balance(root.right);
-        if(right==-1)  return -1;
+        int right=check(root.right);
+        if(right==-1) return -1;
 
-        if(Math.abs(left-right)>1) return -1;
+        if(Math.abs(left-right)>1)  return -1;
+
 
         return 1+Math.max(left,right);
+   
     }
     public boolean isBalanced(TreeNode root) {
 
-        
-        return balance(root)!=-1;
-       
-
+        return check(root)!=-1;
         
     }
 }
