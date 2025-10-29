@@ -1,14 +1,11 @@
 class Solution {
     public int smallestNumber(int n) {
         
-        int[] arr=new int[]{1,3,7,15,31,63,127,255,511,1023};
+        String binary = Integer.toBinaryString(n); //convert into binary string
 
-        for(int i=0;i<arr.length; i++){
+        int len = binary.length();
 
-            if(arr[i]>=n){
-                return arr[i];
-            }
-        }
-        return 0;
-     }
+        return (int)Math.pow(2,len)-1;
+
+    }
 }
