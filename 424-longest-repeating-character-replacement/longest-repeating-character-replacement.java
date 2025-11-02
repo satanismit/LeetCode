@@ -14,7 +14,7 @@ class Solution {
              
             max_f = Math.max(max_f, hash[s.charAt(right)-'A']);
 
-            while((right-left+1)-max_f> k){
+            if((right-left+1)-max_f> k){
                  
                  hash[s.charAt(left)-'A']--;
                  left++;
