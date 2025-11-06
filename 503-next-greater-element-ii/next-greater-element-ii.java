@@ -1,22 +1,28 @@
 class Solution {
     public int[] nextGreaterElements(int[] nums) {
         
-        int n=nums.length;
-        int[] ng =new int[n];
-        Arrays.fill(ng,-1);
+        int n= nums.length; 
+        int[] nge =new int[n];
+        
+        Stack<Integer> st =new Stack<>();
 
-        for(int i=0; i<n; i++){
+        for(int i=(2*n)-1; i>=0; i--){
 
-            for(int j=i+1; j<i+n; j++){
-
-                int ind=j%n;
-
-                if(nums[ind]>nums[i]){
-                    ng[i]=nums[ind];
-                    break;
-                }
+            //remove smalles ele than nums[i]
+            while(!st.isEmpty() && st.peek()<=nums[i%n]){
+                st.pop();
             }
+
+            if(st.isEmpty()){
+                nge[i%n]=-1;
+            }else{
+                nge[i%n]=st.peek();
+            }
+
+            st.push(nums[i%n]);
+
         }
-        return ng;
+
+        return nge;
     }
 }
