@@ -15,7 +15,7 @@
  */
 class Solution {
 
-    //to change the connections 
+    //to change the connections use helper
     public TreeNode helper(TreeNode root){
 
         if(root.left==null){
