@@ -8,7 +8,6 @@ class Solution {
             return;
         }
 
-        
         if( open<n ){
             str.append("(");
             backtrack(open+1,close,str,ans,n);
@@ -23,12 +22,12 @@ class Solution {
 
 
     }
+
     public List<String> generateParenthesis(int n) {
 
         StringBuilder str=new StringBuilder();
         List<String> ans=new ArrayList<>();
         
-
         int open = 0;
         int close= 0;
 
