@@ -2,12 +2,12 @@ class Solution {
  
     public int largestRectangleArea(int[] arr) {
 
-             int n=arr.length;
-          Stack<Integer> st=new Stack<>();
-            int[] pse = new int[n];
-            int[] nse = new int[n];
+     int n=arr.length;
+     Stack<Integer> st=new Stack<>(); 
+     int[] pse = new int[n];
+     int[] nse = new int[n];       
        
-
+    //find previoud smallest element 
         for(int i=0; i<n; i++){
 
             while(!st.isEmpty() && arr[st.peek()]>=arr[i]){
@@ -20,7 +20,8 @@ class Solution {
         }
      
         st.clear();
-    
+
+        //find next smaller element 
         for(int i=n-1; i>=0; i--){
 
             while(!st.isEmpty() && arr[st.peek()]>arr[i]){
@@ -32,8 +33,8 @@ class Solution {
             st.push(i);
         }
      
-           int max=0;
-
+     int max=0;
+        //find max area 
         for(int i=0; i<n; i++){
 
             
