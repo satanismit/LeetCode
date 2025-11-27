@@ -13,8 +13,8 @@ class Solution {
 
         while(right<n){
 
-            sum+=nums[right];
-
+           sum+=nums[right];
+            
            while(sum>goal){
 
             sum-=nums[left];
