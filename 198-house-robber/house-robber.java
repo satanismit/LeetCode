@@ -1,29 +1,31 @@
 class Solution {
 
-    int[] arr=new int[101];
+    // recursion + Memoization  
+    public int solve(int[] nums,int i,int[] dp){
 
-    public int solve(int[] nums, int i){
-
-        //base
-        if(i>=nums.length){
+        int n=nums.length;
+        
+        //base case 
+        if(i>=n){
             return 0;
         }
 
-        if(arr[i]!=-1){
-            return arr[i];
+        if(dp[i]!=-1){
+            return dp[i];
         }
 
-        int steal =nums[i]+solve(nums, i+2);
-        int skip =solve(nums, i+1);
+        int skip = solve(nums,i+1,dp);
+        int steal = nums[i] + solve(nums,i+2,dp);
 
-        return arr[i]=Math.max(steal, skip);
+        return dp[i]= Math.max(steal, skip);
     }
-
-
-
     public int rob(int[] nums) {
         
-        Arrays.fill(arr,-1);
-        return solve(nums, 0);
+        int n=nums.length;
+        int[] dp = new int[n+1]; 
+
+        Arrays.fill(dp,-1);
+        
+        return solve(nums,0,dp);
     }
 }
