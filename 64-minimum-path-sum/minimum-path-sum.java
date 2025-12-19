@@ -1,30 +1,38 @@
 class Solution {
 
-    //memoization 
-    public int solve(int[][] grid,int m,int n,int i,int j,int[][] memo){
+    //tabulation method 
+    public int solve(int[][] grid){
 
-        //base case
-        if(i>m || j>n)  return Integer.MAX_VALUE;
-        if(i==m && j==n) return grid[i][j];
-        
-        if(memo[i][j]!=-1)  return memo[i][j];
+        int m = grid.length;
+        int n = grid[0].length;
 
-        int down =solve(grid,m,n,i+1,j,memo); //down 
-        int right =  solve(grid,m,n,i,j+1,memo);  // right 
+        int[][] dp = new int[m][n];
 
-        return  memo[i][j]= grid[i][j]+ Math.min(right,down);
+        dp[0][0]= grid[0][0];
 
+        for (int i = 1; i < m; i++) {
+            dp[i][0] = dp[i - 1][0] + grid[i][0];
+        }
+
+        // first row
+        for (int j = 1; j < n; j++) {
+            dp[0][j] = dp[0][j - 1] + grid[0][j];
+        }
+
+        // fill rest
+        for (int i = 1; i < m; i++) {
+
+            for (int j = 1; j < n; j++) {
+
+                dp[i][j] = grid[i][j] + Math.min(dp[i - 1][j], dp[i][j - 1]);
+            }
+        }
+
+        return dp[m-1][n-1];
     }
 
     public int minPathSum(int[][] grid) {
-        
-        int m=grid.length;
-        int n=grid[0].length;
 
-        int[][] memo = new int[m][n];
-
-        for(int[] rows:memo)  Arrays.fill(rows, -1);
-
-        return solve(grid,m-1,n-1,0,0,memo);
+        return solve(grid);
     }
 }
