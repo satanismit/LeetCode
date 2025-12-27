@@ -1,34 +1,8 @@
 class Solution {
 
-
     public static final int MOD = (int) 1e9 + 7; 
 
-    //memoization
-    public int solve(int[] coins, int target, int i,int[][] memo){
-
-        int n=coins.length;
-
-        //base case 
-        if(i==0){
-
-            if(target%coins[i]==0)  return target/coins[i];
-            else return MOD;
-        }
-
-        if(memo[i][target]!=-1)  return memo[i][target];
-
-        //not_take 
-        int not_take = solve(coins, target, i-1,memo);
-
-        //take
-        int take = MOD;
-
-        if( target>= coins[i])  take = 1+solve(coins, target-coins[i], i,memo);
-
-        return memo[i][target]=Math.min(not_take, take);
-
-    }
-
+    //TABULATION METHOD 
     public int coinChange(int[] coins, int amount) {
         
         if(amount == 0)  return 0;
@@ -36,14 +10,38 @@ class Solution {
 
         int n= coins.length;
 
-        int[][] memo = new int[n][amount+1];
-
-        for(int[] rows:memo)  Arrays.fill(rows, -1);
+        int[][] dp = new int[n][amount+1];
 
         //base case 
-       int res = solve(coins, target, n-1,memo);
+        for(int i=0; i<=target; i++){
 
-        return res == MOD ? -1:res ;
+            if(i%coins[0]==0) {
+
+                dp[0][i]=i/coins[0];
+            }else{
+                dp[0][i]=MOD;
+            }
+        }
+
+        // express for ind and target
+        for(int i=1; i<n; i++){
+
+            for(int j=0; j<=target; j++){
+
+            int not_take = dp[i-1][j];
+
+            int take = MOD;
+            if( coins[i] <= j)  take = 1+dp[i][j-coins[i]];
+
+            dp[i][j] = Math.min(not_take, take);
+                
+            }
+        }
+        
+        int result = dp[n - 1][target];
+
+        // Return -1 if the target amount cannot be reached with the given coins
+        return (result >= MOD) ? -1 : result;
 
 
         
