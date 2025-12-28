@@ -9,10 +9,24 @@ class Solution {
 
         for(int i=0; i<m; i++){
 
-            for(int j=0; j<n; j++){
+           
+           int left = 0, right = n-1;
+           int point = n;
 
-                if(grid[i][j]<0)  count++;
-            }
+           while(left <= right){
+
+              int mid = left + (right - left)/2;
+
+              if(grid[i][mid] < 0){
+
+                point = mid;
+                right = mid -1;
+
+              }else{
+                left = mid+1;
+              }
+           }
+           count += n - point;
         }
 
         return count;
