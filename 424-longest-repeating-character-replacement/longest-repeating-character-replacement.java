@@ -6,17 +6,17 @@ class Solution {
         int n=s.length();
         int left =0,right=0,max_f=0,max_len=0;
 
-        int[] hash =new int[26];
+        Map<Character, Integer> map=new HashMap<>();
 
         while(right < n){
 
-            hash[ s.charAt(right)-'A']++; //update frequency 
+            map.put( s.charAt(right), map.getOrDefault(s.charAt(right),0)+1);//update freq
              
-            max_f = Math.max(max_f, hash[s.charAt(right)-'A']);
+            max_f = Math.max(max_f, map.get(s.charAt(right))); //max frequency 
 
             if((right-left+1)-max_f> k){
                  
-                 hash[s.charAt(left)-'A']--;
+                 map.put( s.charAt(left), map.get(s.charAt(left))-1);
                  left++;
             }
 
