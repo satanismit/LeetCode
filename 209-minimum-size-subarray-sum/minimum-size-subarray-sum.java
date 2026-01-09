@@ -1,34 +1,30 @@
 class Solution {
+
     public int minSubArrayLen(int target, int[] nums) {
-        
+
         int n=nums.length;
 
-        int cursum=0, min=Integer.MAX_VALUE;
+        int right=0, left =0;
+        int min_length = Integer.MAX_VALUE;
 
-        // take two pointer 
-        int low=0,high=0;
+        int sum =0;
+        while(right<n){
 
-        while(high < n){
+            sum += nums[right];
 
-            cursum+=nums[high];
-            high++;
+           //shrink the window 
+           while(sum>=target){
+            
+              min_length = Math.min( min_length, right-left+1);
+              sum -= nums[left++];
+           }
+           right++;
 
-            while(cursum>=target){
-
-                int windowsize= high-low;
-
-                min=Math.min(min,windowsize);
-
-                 cursum-=nums[low];
-                 low++;
-
-            }
         }
 
-        if(min==Integer.MAX_VALUE){
-            return 0;
-        }
+        if(min_length==Integer.MAX_VALUE)  return 0;
 
-        return min;
+        return min_length;
+        
     }
 }
