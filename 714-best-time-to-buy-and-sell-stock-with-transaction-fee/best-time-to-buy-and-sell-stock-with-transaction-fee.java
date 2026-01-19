@@ -1,6 +1,6 @@
 class Solution {
 
-   
+   //memoization
     public int solve(int[] prices, int ind, int buy, int n, int[][] memo, int fee){
 
     //base case 
