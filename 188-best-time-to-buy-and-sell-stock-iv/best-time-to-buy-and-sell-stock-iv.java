@@ -1,38 +1,52 @@
 class Solution {
 
-    public int maxProfit(int val, int[] prices) {
-        
-    int n = prices.length;
+    public int solve(int[] prices, int ind, int buy, int n,int cap,int[][][] memo){
 
-    int[][][] dp =new int[n+1][2][val+1];
+    //base case 
+    if(cap==0) return 0;
+    if(ind== n)  return 0;
 
-    for(int ind = n-1; ind>=0; ind--){
+     int profit = 0;
 
-        for(int buy=0; buy<=1; buy++){
+     if(memo[ind][buy][cap] != -1)  return memo[ind][buy][cap];
 
-            for(int k=1; k<=val; k++){
+    if(buy==1){
+        //take or not take 
+        // buy or not buy
 
-                int profit = 0;
+        int take = -prices[ind] + solve(prices, ind+1, 0,n,cap, memo);
+        int notbuy = solve(prices, ind+1, 1,n,cap, memo);
+        profit = Math.max(profit, Math.max(take, notbuy));
 
-                if(buy==1){
-                int take =  -prices[ind] + dp[ind+1][0][k];
-                int notbuy = dp[ind+1][1][k];
-                profit = Math.max(profit, Math.max(take, notbuy));
+    }else{
 
-                }else{
-                //sell or not sell
-                int sell = prices[ind] + dp[ind+1][1][k-1];
-                int notsell = dp[ind+1][0][k];
-                profit = Math.max(profit, Math.max(sell, notsell));
+        //sell or not sell
+        int sell = prices[ind] + solve(prices, ind+1, 1,n,cap-1, memo);
+        int notsell = solve(prices, ind+1, 0,n,cap, memo);
+        profit = Math.max(profit, Math.max(sell, notsell));
 
-                }
-
-                dp[ind][buy][k]= profit;
-
-            }
-        }
     }
 
-    return dp[0][1][val];
+    return memo[ind][buy][cap]=profit;
+
+    }
+
+    public int maxProfit(int val, int[] prices) {
+        
+    int n= prices.length;
+
+        int[][][] memo= new int[n][2][val+1];
+
+        for(int[][] rows:memo){
+
+            for(int[] cols:rows){
+
+                Arrays.fill(cols, -1);
+            }
+        }
+
+        return solve(prices, 0, 1, n, val,memo);
+
+    
     }
 }
