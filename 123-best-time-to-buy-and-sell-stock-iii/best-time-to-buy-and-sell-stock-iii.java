@@ -1,53 +1,49 @@
 class Solution {
 
-    public int solve(int[] prices, int ind, int buy, int n,int cap,int[][][] memo){
+    public int solve(int[] prices, int ind, int n,int k,int[][] memo){
 
     //base case 
-    if(cap==0) return 0;
-    if(ind== n)  return 0;
+    if( ind==n || k==4)  return 0;
 
      int profit = 0;
 
-     if(memo[ind][buy][cap] != -1)  return memo[ind][buy][cap];
+     if(memo[ind][k] != -1)  return memo[ind][k];
 
-    if(buy==1){
+    if(k%2==0){ //buy
         //take or not take 
         // buy or not buy
 
-        int take = -prices[ind] + solve(prices, ind+1, 0,n,cap, memo);
-        int notbuy = solve(prices, ind+1, 1,n,cap, memo);
+        int take = -prices[ind] + solve(prices, ind+1, n,k+1, memo);
+        int notbuy = solve(prices, ind+1,n,k, memo);
         profit = Math.max(profit, Math.max(take, notbuy));
 
     }else{
 
         //sell or not sell
-        int sell = prices[ind] + solve(prices, ind+1, 1,n,cap-1, memo);
-        int notsell = solve(prices, ind+1, 0,n,cap, memo);
+        int sell = prices[ind] + solve(prices, ind+1,n, k+1, memo);
+        int notsell = solve(prices, ind+1,n, k, memo);
         profit = Math.max(profit, Math.max(sell, notsell));
 
     }
 
-    return memo[ind][buy][cap]=profit;
+    return memo[ind][k]=profit;
 
     }
 
 
+    //using only memo[n][4]
 
     public int maxProfit(int[] prices) {
 
         int n= prices.length;
 
-        int[][][] memo= new int[n][2][3];
+        int[][] memo= new int[n][4];
 
-        for(int[][] rows:memo){
-
-            for(int[] cols:rows){
-
-                Arrays.fill(cols, -1);
-            }
+        for(int[] rows:memo){
+            Arrays.fill(rows, -1);
         }
 
-        return solve(prices, 0, 1, n,2,memo);
+        return solve(prices, 0, n,0,memo);
 
 
         
