@@ -17,23 +17,29 @@ class Solution {
 
     public int check(TreeNode root){
 
+        //check for null
         if(root==null)  return 0;
 
-        int left= check(root.left);
+        //check for left 
+        int left = check(root.left);
         if(left==-1) return -1;
 
-        int right=check(root.right);
-        if(right==-1) return -1;
+        //check for right 
+        int right = check(root.right);
+        if(right==-1)  return -1;
+        
+        if(Math.abs(right-left)>1)  return -1;
 
-        if(Math.abs(left-right)>1)  return -1;
-
-
-        return 1+Math.max(left,right);
-   
+        return 1+Math.max(left, right);
     }
+
     public boolean isBalanced(TreeNode root) {
 
-        return check(root)!=-1;
+        if(check(root)==-1){
+            return false;
+        }
+
+        return true;
         
     }
 }
