@@ -1,32 +1,37 @@
 class Solution {
+
+    //memoization
+    public int solve(int ind, int prevind, int[] nums, int[][] memo){
+
+        //base case
+        if(ind==nums.length)  return 0;
+
+        if(memo[ind][prevind+1]!=-1)  return memo[ind][prevind+1];
+        //take
+        int take = 0;     
+    
+        if(prevind==-1 || nums[prevind]<nums[ind]){
+             take =  1+ solve(ind+1, ind, nums, memo);
+        }
+       
+        //not take
+        int nottake = solve(ind+1, prevind, nums, memo);
+
+        return memo[ind][prevind+1]= Math.max(take, nottake);
+
+    }
+
     public int lengthOfLIS(int[] nums) {
 
-        int n=nums.length;
+        int n= nums.length;
+
+        int[][] memo = new int[n][n+1];
+
+        for(int[] rows:memo) Arrays.fill(rows, -1);
+
+        return solve(0,-1, nums, memo);
+
+
         
-        if(nums ==null || n==0){
-            return 0;
-        }
-
-        int[] dp=new int[n];
-        Arrays.fill(dp,1);
-
-        for(int i=1; i<n; i++){
-
-            for(int j=0; j<i; j++){
-
-                if(nums[i]>nums[j]){
-
-                    dp[i]=Math.max(dp[i], dp[j]+1);
-                }
-            }
-        }
-        int max=Integer.MIN_VALUE;
-
-        for(int i=0;i<n; i++){
-
-            max = Math.max(max,dp[i]);
-        }
-
-        return max;
     }
 }
