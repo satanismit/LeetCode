@@ -15,33 +15,22 @@
  */
 class Solution {
 
-    int count = 0;   // counter for visited nodes
-    int result = -1; // stores kth smallest value
+
+    public void inorder(TreeNode root, List<Integer> list){
+
+        if(root==null) return;
+
+        inorder(root.left,list);
+        list.add(root.val);
+        inorder(root.right, list);
+    }
 
     public int kthSmallest(TreeNode root, int k) {
 
-        inorder(root, k);
-        return result;
+        List<Integer> ans = new  ArrayList<>();
+
+        inorder(root, ans);
+        return ans.get(k-1);
+        
     }
-
-    private void inorder(TreeNode root, int k) {
-
-
-        if (root == null) {
-            return;
-        }
-
-        // Left subtree
-        inorder(root.left, k);
-
-        // Visit current node
-        count++;
-        if (count == k) {
-            result = root.val;
-            return; // we can stop further traversal
-        }
-
-        // Right subtree
-        inorder(root.right, k);
-}
 }
