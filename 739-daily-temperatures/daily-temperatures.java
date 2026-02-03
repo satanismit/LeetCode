@@ -1,25 +1,44 @@
 class Solution {
-    public int[] dailyTemperatures(int[] temperatures) {
-        
-        int n=temperatures.length;
-        int[] res=new int[n];
-        Stack<Integer> st=new Stack<>();
-         st.add(n-1);
+
+    public int[] getNGE(int[] arr){
+
+        int n= arr.length;
+        Stack<Integer> st= new Stack<>();
+
+        int[] nge = new int[n];
+
         for(int i=n-1; i>=0; i--){
 
-            // Always remember the order of conditions inside the while loop----
-            while(!st.isEmpty() && temperatures[i]>=temperatures[st.peek()]){
+            while(!st.isEmpty() && arr[st.peek()]<=arr[i]){
                 st.pop();
             }
-            if(st.isEmpty()){
-                res[i]=0;
-            }else{
-                   res[i]=st.peek()-i;
-            }
-         
+
+            if(st.isEmpty())  nge[i] = i; //if no greater ele --then keep it i 
+            else{
+                nge[i]=st.peek();
+            } 
+
             st.push(i);
         }
 
-        return res;
+        return nge;
+    }
+
+    public int[] dailyTemperatures(int[] temperatures) {
+
+        int n= temperatures.length;
+
+        int[] nge = getNGE(temperatures);
+
+        int[] ans =new int[n];
+
+        for(int i=0; i<n; i++){
+
+            ans[i]=nge[i]-i;
+        }
+
+        return ans;
+
+        
     }
 }
