@@ -1,25 +1,19 @@
 class Solution {
 
-   
-
-
     public int[] topKFrequent(int[] nums, int k) {
-        
-        Map<Integer,Integer> map=new HashMap<>();
 
-        //count frequency for all elements
-        for(int num:nums){
-            map.put( num, map.getOrDefault(num,0)+1);
-        }
+        int n = nums.length;
+        Map<Integer, Integer> map = new HashMap<>();
 
-        // create priority queue for sorting based on values 
+        for(int i=0; i<n; i++){
+            map.put( nums[i], map.getOrDefault(nums[i], 0)+1);
+        }   
+
         PriorityQueue<Map.Entry<Integer, Integer>> q = new PriorityQueue<>(
-            (a, b) -> a.getValue() - b.getValue()
+            (a,b) ->  a.getValue()-b.getValue()
         );
-
-        
-        // add  entry to priority queue
-        for(Map.Entry<Integer,Integer> ele:map.entrySet()){
+         
+       for(Map.Entry<Integer,Integer> ele:map.entrySet()){
 
             q.add(ele);
             if(q.size()>k){
@@ -35,9 +29,8 @@ class Solution {
 
         }
         
-    
         return res;
 
-
+        
     }
 }
