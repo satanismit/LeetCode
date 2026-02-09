@@ -23,27 +23,27 @@ class Solution {
 
         if(root==null)  return ans;
 
-        boolean reverse = false;
+        boolean reverse = true;
 
         while(!q.isEmpty()){
 
             int size = q.size();
-            List<Integer> temp = new ArrayList<>();
+            LinkedList<Integer> temp = new LinkedList<>();
 
             for(int i=0; i<size; i++){
 
                 TreeNode node = q.poll();
-                temp.add(node.val);
-
+                
                 if(node.left!=null) q.offer(node.left);
                 if(node.right!=null) q.offer(node.right);
 
-            }
+                 if(reverse){
+                    temp.addLast(node.val);
+                }else{
+                    temp.addFirst(node.val);
+                }
 
-            if(reverse){
-             Collections.reverse(temp);
             }
-
             reverse = !reverse;
             ans.add(temp);
         }
