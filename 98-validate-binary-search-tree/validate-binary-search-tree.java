@@ -15,36 +15,28 @@
  */
 class Solution {
 
-    public void helper(TreeNode root,List<Integer> ans){
+    public void inorder(List<Integer> list, TreeNode root){
 
-        if(root==null){
-            return;
-        }
+        if(root==null)  return;
 
-        helper(root.left,ans);
-        ans.add(root.val);
-        helper(root.right,ans);
+        inorder(list,root.left);
+        list.add(root.val);
+        inorder(list, root.right);
 
     }
+
     public boolean isValidBST(TreeNode root) {
         
-       //inorder traversal
-       List<Integer> ans=new ArrayList<>();
+        List<Integer> list = new ArrayList<>();
 
-       helper(root,ans);
+        inorder(list, root);
 
-       for(int i=0; i<ans.size()-1; i++){
+        for(int i=1; i<list.size(); i++){
 
-        if(ans.get(i)>=ans.get(i+1)){
-            return false;
+            if(list.get(i)<=list.get(i-1))  return false;
         }
-       }
 
-    return true;
-       
-
-
-       
-       
+        return true;
+        
     }
 }
