@@ -14,15 +14,14 @@ class Solution {
 
     }
 
-    //memoization 
-   int[] memo;
+    // tabulation method 
+    public int minCut(String s) {
 
-    public int partition(String s, int i,int n){
-        
-        //base case
-        if(i==n)  return 0;
+        int n= s.length();
 
-        if(memo[i]!=-1)  return memo[i];
+       int[] dp =new int[n+1];
+
+       for(int i=n-1; i>=0;i--){
 
         int ans = Integer.MAX_VALUE;
 
@@ -32,26 +31,17 @@ class Solution {
 
             if(isPalindrom(temp)){
 
-                int cost =1 + partition(s,j+1,n);
+                int cost =1 + dp[j+1];
                 ans = Math.min(cost, ans);
             }
 
         }
 
-        return memo[i]=ans;
+        dp[i]=ans;
+            
+       }
 
-    }
-
-   
-
-    public int minCut(String s) {
-
-        int n= s.length();
-
-        memo = new int[n];
-       Arrays.fill(memo, -1);
-
-        return partition(s, 0,n)-1;  //becase we have n-1 cuts for n partition 
+        return dp[0]-1;  //becase we have n-1 cuts for n partition 
 
      
         
