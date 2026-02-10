@@ -14,33 +14,33 @@
  * }
  */
 class Solution {
-    public int postind=0;
-    public TreeNode solve(int[] inorder, int[] postorder,int st, int end){
 
-        if(st>end){  return null;}
+    int postind;
+    public TreeNode build(int[] inorder, int[] postorder, int st, int end){
 
-        int rootval=postorder[postind];
+        if(st>end)  return null;
 
-        int i=st;
-        for (; i<end; i++){
+        TreeNode root = new TreeNode(postorder[postind--]);
 
-            if(inorder[i]==rootval){
-                break;
-            }
+
+        int i=0; 
+        for( i=st; i<inorder.length; i++){  //we can also start with 0
+
+            if(root.val==inorder[i])  break;
         }
-
-        postind--;
-        TreeNode root=new TreeNode(rootval);
-        root.right=solve(inorder, postorder,i+1,end);
-        root.left=solve(inorder, postorder,st,i-1);
-     
+      
+        root.right = build(inorder, postorder, i+1, end);
+        root.left = build(inorder, postorder, st, i-1);
 
         return root;
+
     }
+
     public TreeNode buildTree(int[] inorder, int[] postorder) {
+
+          postind =postorder.length-1;
+
+        return build(inorder, postorder, 0, inorder.length-1);
         
-        int n=postorder.length;
-        postind = n-1;
-        return solve(inorder,postorder,0,n-1);
     }
 }
