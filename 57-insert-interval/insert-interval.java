@@ -1,32 +1,32 @@
 class Solution {
+
     public int[][] insert(int[][] intervals, int[] newInterval) {
-        List<int[]> res = new ArrayList<>();
         
-        int i=0; 
-        int n=intervals.length;
+        int n = intervals.length;
+        List<int[]> res = new ArrayList<>();
 
-        while(i<n && intervals[i][1]<newInterval[0]){
-            res.add(intervals[i]);
+        int i=0;
+        //add left part that are not overlapping 
+         while( i<n && intervals[i][1] < newInterval[0]){
+                res.add(new int[]{intervals[i][0], intervals[i][1]});
+                i++;
+            }
+
+        while(i<n && intervals[i][0] <= newInterval[1]){
+
+            newInterval[0] = Math.min(intervals[i][0], newInterval[0]);
+            newInterval[1] = Math.max(intervals[i][1], newInterval[1]);
             i++;
-
-        }
-
-        //
-        while(i<n && intervals[i][0]<=newInterval[1]){
-
-            newInterval[0]=Math.min(intervals[i][0],newInterval[0]);
-            newInterval[1]=Math.max(intervals[i][1],newInterval[1]);
-            i++;
-
         }
         res.add(newInterval);
 
-        while(i<n){
 
-            res.add(intervals[i]);
-            i++;
+        while(i<n){
+            res.add(new int[]{intervals[i][0], intervals[i][1]});
+                i++;
         }
 
         return res.toArray(new int[res.size()][]);
+        
     }
 }
