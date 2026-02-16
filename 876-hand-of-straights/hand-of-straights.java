@@ -1,34 +1,28 @@
 class Solution {
 
-    public boolean isNStraightHand(int[] hand, int groupSize) {
+    public boolean isNStraightHand(int[] hand, int W) {
 
-        int n= hand.length;
-
-        TreeMap<Integer, Integer> map = new TreeMap<>();
+        PriorityQueue<Integer> pq = new PriorityQueue<>();
 
         for(int i : hand){
-            map.put( i, map.getOrDefault(i, 0)+1);
+            pq.add(i);
         }
 
-        while(!map.isEmpty()){
+        while(pq.size() != 0) {
 
-             int key = map.firstKey();
+            int start = pq.poll();
 
-             for(int i=0; i<groupSize; i++){
+            for(int j = 1; j < W; j++){
 
-                if(!map.containsKey(key+i)) return false;
-
-                map.put(key+i, map.get(key+i)-1);
-
-                if(map.get(key+i)==0)  map.remove(key+i);
-             }
-
+                if(pq.remove(start + j)) {
+                    continue;
+                }
+                else {
+                    return false;
+                }
+            }
         }
 
         return true;
-
-
-
-        
     }
 }
