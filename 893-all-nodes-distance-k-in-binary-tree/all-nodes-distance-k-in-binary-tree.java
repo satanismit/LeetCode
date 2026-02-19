@@ -7,6 +7,7 @@
  *     TreeNode(int x) { val = x; }
  * }
  */
+ 
 class Solution {
 
     Map<Integer, List<Integer>> adj = new HashMap<>();
@@ -46,7 +47,7 @@ class Solution {
 
 
         Queue<Integer> q= new LinkedList<>();
-        Set<Integer> set = new HashSet<>();
+        Set<Integer> vis = new HashSet<>();
 
 
         q.offer(target.val);
@@ -59,12 +60,12 @@ class Solution {
             for(int i=0; i<size; i++){
                 
                 int node = q.poll();
-                set.add(node);
+                vis.add(node);
                 if(adj.containsKey(node)){
 
                     for(int it:adj.get(node)){
 
-                        if(!set.contains(it)){
+                        if(!vis.contains(it)){
                             q.offer(it);
                         }
                     }
@@ -77,6 +78,7 @@ class Solution {
                 while(!q.isEmpty()){
                     ans.add(q.poll());
                 }
+                break;
             }
             
         }
