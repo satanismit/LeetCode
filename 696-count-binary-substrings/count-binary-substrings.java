@@ -1,30 +1,29 @@
 class Solution {
+
     public int countBinarySubstrings(String s) {
 
-      int n= s.length();
+        int n= s.length();
 
-      List<Integer> group = new ArrayList<>();
-      int count = 1;
+        int curr =1;
+        int prev = 0;
 
-      for(int i=1; i<n; i++){
+        int ans = 0;
 
-        if(s.charAt(i)==s.charAt(i-1)){
-            count++;
-        }else{
+        for(int i=1; i<s.length(); i++){
 
-            group.add(count);
-            count=1;
+            if(s.charAt(i)==s.charAt(i-1)){
+                curr++;
+            }else{
+
+                ans += Math.min(prev, curr);
+                prev = curr;
+                curr=1;
+            }
         }
-      }
-      //add last count 
-      group.add(count);
+        //count for last 
+        ans += Math.min(prev, curr);
 
-        int ans =0;
-      for(int i=1; i<group.size(); i++){
-
-            ans += Math.min(group.get(i), group.get(i-1));
-      }
-
-      return ans;
+        return ans;
+        
     }
 }
