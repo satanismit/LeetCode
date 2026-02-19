@@ -1,53 +1,30 @@
 class Solution {
-
     public int countBinarySubstrings(String s) {
 
-        int n= s.length();
+      int n= s.length();
 
-        int i=0;
-        int ans = 0;
+      List<Integer> group = new ArrayList<>();
+      int count = 1;
 
-        while(i<n){
+      for(int i=1; i<n; i++){
 
-            int ch = s.charAt(i);
-            int zero = 0, ones = 0;
+        if(s.charAt(i)==s.charAt(i-1)){
+            count++;
+        }else{
 
-            //'0011' this like substring
-            if(s.charAt(i)=='0'){
-
-                while(i<n && s.charAt(i)=='0'){
-                    zero++;
-                    i++;
-                }
-
-                int j=i;
-
-                while(j<n && s.charAt(j)=='1'){
-                    ones++;
-                    j++;
-                }
-
-            }// '1100' this like substring
-            else{
-
-                while(i<n && s.charAt(i)=='1'){
-                    ones++;
-                    i++;
-                }
-
-                int j=i;
-                while(j<n && s.charAt(j)=='0'){
-                    zero++;
-                    j++;
-                }
-            }
-
-            ans += Math.min(zero, ones);
-
-
+            group.add(count);
+            count=1;
         }
+      }
+      //add last count 
+      group.add(count);
 
-        return ans;
-        
+        int ans =0;
+      for(int i=1; i<group.size(); i++){
+
+            ans += Math.min(group.get(i), group.get(i-1));
+      }
+
+      return ans;
     }
 }
