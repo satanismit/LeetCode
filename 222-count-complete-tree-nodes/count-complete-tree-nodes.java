@@ -15,24 +15,45 @@
  */
 class Solution {
 
-    int count = 0;
+    
+    public int getLeft(TreeNode root){
 
-    public void inorder(TreeNode root){
+        int count =0;
 
-        if(root==null){
-            return;
+        while(root!=null){
+            count++;
+            root=root.left;
         }
 
-        inorder(root.left);
-        count++;
-        inorder(root.right);
-
+        return count;
     }
-    public int countNodes(TreeNode root) {
-        
-        inorder(root);
+
+    public int getRight(TreeNode root){
+
+        int count =0;
+
+        while(root!=null){
+            count++;
+            root=root.right;
+        }
 
         return count;
+    }
+
+
+    public int countNodes(TreeNode root) {
+
+        if(root==null)  return 0;
+
+        int lh = getLeft(root);
+        int rh = getRight(root);
+
+        if(lh == rh){
+            return (int)Math.pow(2,lh)-1;
+        }
+
+        return 1 + countNodes(root.left) + countNodes(root.right);
+
     }   
 
 }
