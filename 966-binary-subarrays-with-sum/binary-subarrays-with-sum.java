@@ -1,32 +1,28 @@
 class Solution {
     public int numSubarraysWithSum(int[] nums, int goal) {
         
-        //expected below n^2 time (after checking constraints)
-        return helper(nums,goal)-helper(nums,goal-1);
-    }
-
-    public int helper(int[] nums,int goal){
-        if(goal<0) return 0;
-
-        int n=nums.length;
-        int left=0,right=0,sum=0,count=0;
-
-        while(right<n){
-
-           sum+=nums[right];
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        // prefix sum 0 occurs once initially
+        map.put(0, 1);
+        
+        int prefixSum = 0;
+        int count = 0;
+        
+        for (int num : nums) {
             
-           while(sum>goal){
-
-            sum-=nums[left];
-
-            left++;
-           }
-
-           count = count + right-left+1;
-
-            right++;
+            prefixSum += num;
+            
+            // check if (prefixSum - goal) seen before
+            if (map.containsKey(prefixSum - goal)) {
+                count += map.get(prefixSum - goal);
+            }
+            
+            // store current prefix sum
+            map.put(prefixSum, map.getOrDefault(prefixSum, 0) + 1);
         }
-
+        
         return count;
+        
     }
 }
