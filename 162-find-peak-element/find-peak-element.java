@@ -1,38 +1,24 @@
 class Solution {
     public int findPeakElement(int[] nums) {
-        
-      int n=nums.length;
 
-      if(n==1){
-        return 0;
-      }  
-        //check first char
-      if(nums[0]>nums[1]){
-        return 0;
-      }
-        //check last char 
-      if(nums[n-1]>nums[n-2]){
-        return n-1;
-      }
+        int n= nums.length;
 
-      int left=0, right=n-2;
-      int ans=0;
+        int left = 0, right = n-1;
 
-      while(left<=right){
+        while(left<right){
 
-        int mid=left+(right-left)/2;
+            int mid = left+(right-left)/2;
 
-        if(nums[mid] > nums[mid+1]  && nums[mid]>nums[mid-1]){
-            ans=mid;
-            return mid;
-        }else if(nums[mid]<nums[mid+1]){
-            left=mid+1;
-        }else{
-            right=mid-1;
+            if(nums[mid] < nums[mid+1]){
+
+                left = mid+1;
+            }else{
+
+                right = mid;
+            }
         }
-      }
 
-    return ans;
-
+        return left;
+        
     }
 }
