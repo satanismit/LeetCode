@@ -1,38 +1,30 @@
 class Solution {
 
-    //tabulation method 
-    public int solve(int[][] grid){
+    int[][] memo;
 
-        int m = grid.length;
-        int n = grid[0].length;
+    public int solve(int[][] grid, int i, int j){
 
-        int[][] dp = new int[m][n];
+    
+        if(i==0 && j==0)  return grid[i][j];
+        if(i<0 || j<0)  return (int)1e9;
 
+        if(memo[i][j]!=-1) return memo[i][j];
 
-        // fill rest
-        
-        for (int i = 0; i < m; i++) {
+        int up = grid[i][j] + solve( grid, i-1, j);
+        int left = grid[i][j] + solve(grid, i, j-1);
 
-            for (int j = 0; j < n; j++) {
+        return memo[i][j]=Math.min(up, left);
 
-                if(i==0 && j==0) dp[i][j]= grid[i][j];
-                else{
-                    
-                    int up=Integer.MAX_VALUE, left=Integer.MAX_VALUE;
-
-                    if(i>0)  up = grid[i][j]+dp[i-1][j];
-                    if(j>0)  left = grid[i][j] + dp[i][j-1];
-
-                    dp[i][j] = Math.min(up,left);
-                }
-            }
-        }
-
-        return dp[m-1][n-1];
     }
 
     public int minPathSum(int[][] grid) {
 
-        return solve(grid);
+        int n= grid.length;
+        memo = new int[n][grid[0].length];
+
+        for(int[] rows: memo)  Arrays.fill(rows, -1);
+
+        return solve(grid, n-1, grid[0].length-1);
+        
     }
 }
