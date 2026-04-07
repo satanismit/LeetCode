@@ -1,38 +1,46 @@
 class Solution {
 
-    public static String sort(String p){
-
-        char[] charArray = p.toCharArray();
-            Arrays.sort(charArray);
-         return  new String(charArray);
-
-    }
     public List<Integer> findAnagrams(String s, String p) {
-        
-        int k=p.length();
-        int n=s.length();
-       
-        List<Integer> list=new ArrayList<>();
 
-        if(k>n) return list;
+        int n= s.length();
 
-        p=sort(p);
-         
+        Map<Character, Integer> map = new HashMap<>();
 
+        for(char c:p.toCharArray()){
 
-        for(int j=0; j<=n-k; j++){
+            map.put(c, map.getOrDefault(c, 0)+1);
+        }
 
-           String sub=s.substring(j,j+k);
+        int right = 0;
+        int left =0;
 
-           if(sort(sub).equals(p)){
-            list.add(j);
-           }
+        List<Integer> list = new ArrayList<>();
+        Map<Character, Integer> map2= new HashMap<>();
 
+        while(right<n){
 
+            char c = s.charAt(right);
 
+            map2.put(c,map2.getOrDefault(c, 0)+1 );
 
+            if(right-left+1== p.length()){
+
+                if(map.equals(map2)){
+                    list.add(left);
+                }
+
+                char ch = s.charAt(left);
+
+                map2.put(ch, map2.get(ch) - 1);
+                if (map2.get(ch) == 0) map2.remove(ch); 
+                left++;
+                
+            }
+
+            right++;
         }
 
         return list;
+        
     }
 }
