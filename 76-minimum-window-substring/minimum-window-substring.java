@@ -1,4 +1,14 @@
 class Solution {
+    
+    public boolean isValid(Map<Character,Integer> curr, Map<Character, Integer> map){
+
+        for(char c:map.keySet()){
+
+            if(curr.getOrDefault(c,0) < map.get(c)) return false;
+        }
+
+        return true;
+    }
 
     public String minWindow(String s, String t) {
 
@@ -13,42 +23,28 @@ class Solution {
         // we need curr hashmap to compare with original 
         Map<Character, Integer> curr = new HashMap<>();
 
-        int left = 0, right =0;
-        int ans = Integer.MAX_VALUE;
-        int formed = 0;
-        int required = map.size();
-        int start =0;
-
+        int minlen =Integer.MAX_VALUE;
+        int start=0;
+        int right=0, left=0;
+        
         while(right<n){
             
-            char ch = s.charAt(right);
+            char c = s.charAt(right);
 
-           if (map.containsKey(ch)) {
-                curr.put(ch, curr.getOrDefault(ch, 0) + 1);
+           curr.put(c , curr.getOrDefault(c, 0)+1 );
 
-                if (curr.get(ch).intValue() == map.get(ch).intValue()) {
-                    formed++;
-                }
-            }
             
-            while(formed == required){
+            while(isValid(curr, map)){
 
-                if (right - left + 1 < ans) {
-                    ans = right - left + 1;
+                if (right - left + 1 < minlen) {
+                    minlen = right - left + 1;
                     start = left;
                 }
 
                 char leftChar = s.charAt(left);
+                curr.put(leftChar, curr.get(leftChar) - 1);
 
-                if (map.containsKey(leftChar)) {
-
-                    curr.put(leftChar, curr.get(leftChar) - 1);
-
-                    if (curr.get(leftChar) < map.get(leftChar)) {
-                        formed--;
-                    }
-                }
-                
+                if(curr.get(leftChar)==0)  curr.remove(leftChar);    
                 left++;
             }
 
@@ -59,7 +55,7 @@ class Solution {
 
 
 
-        return ans == Integer.MAX_VALUE ? "" : s.substring(start, start + ans);
+        return minlen == Integer.MAX_VALUE ? "" : s.substring(start, start + minlen);
         
     }
 }
