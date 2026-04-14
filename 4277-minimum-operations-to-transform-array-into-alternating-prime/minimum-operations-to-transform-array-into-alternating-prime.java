@@ -1,54 +1,70 @@
 class Solution {
 
-    public boolean isPrime(int n){
+    static int MAX = 200005;
+    static boolean[] isPrime = new boolean[MAX];
+    static int[] nextPrime = new int[MAX];
 
-         if(n <= 1) return false;
+    public void sieve(){
 
-        for(int i=2; i*i<=n; i++){
-            if(n%i==0) return false;   
+        //assume all prime 
+        for(int i=2; i<MAX; i++)  isPrime[i]=true;
+
+        for(int i=2; i*i<MAX; i++){
+
+            if(isPrime[i]){
+                //make false it's all multipliers 
+                for(int j=i*i; j<MAX; j+=i){
+
+                    isPrime[j]=false;
+                }
+            }
         }
+    }
 
-        return true;
+    public void computeNextPrime(){
+
+        int next = -1;
+
+        for(int i=MAX-1; i>=0; i--){
+
+            if(isPrime[i])  next = i;
+
+            nextPrime[i]=next;
+        }
     }
 
     public int minOperations(int[] nums) {
+        
 
         int n= nums.length;
 
-        int operations = 0;
+        sieve();
+        computeNextPrime();
+
+        int operations=0;
+
 
         for(int i=0; i<n; i++){
 
             int val = nums[i];
- 
+
             if(i%2==0){
-                //even index --> expected prime
+                //even index --> prime 
+                if(!isPrime[val]){
 
-                if(isPrime(nums[i])==false){
-
-                    int x= val;
-
-                    while(isPrime(x)==false){
-                        x++;
-                    }
-                    operations += (x - val);
-
+                    operations += (nextPrime[val]-val);
                 }
             }else{
 
-                //odd index --> expected non prime
+                //odd index --> non prime 
+                 
+                 if(isPrime[val]){
 
-                if(isPrime(val)==true){
-
-                   if(val == 2){
-                        operations += 2; // 2 → 4
-                    } else {
-                        operations += 1; // odd prime → even → non-prime
-                    }
-                }
+                    if(val==2)  operations+=2;
+                    else operations++;
+                 }
             }
         }
-
         return operations;
 
     }
