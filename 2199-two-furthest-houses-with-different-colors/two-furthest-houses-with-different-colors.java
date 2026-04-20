@@ -3,21 +3,27 @@ class Solution {
 
         int n= colors.length;
 
-        int ans = 0;
+        int dis = 0;
 
-        for(int i=0; i<n; i++){
+        //fix rightmost
+        for(int i=0; i<n-1; i++){
 
-            for(int j=0; j<n; j++){
-
-                if(colors[i]!=colors[j]){
-                    ans = Math.max(ans, Math.abs(j-i));
-                }
-                
+            if(colors[i]!=colors[n-1]){
+                dis = Math.max( dis, n-1-i);
             }
 
         }
 
-        return ans;
+        //fix left most
+        for(int i=n-1; i>=1; i--){
+
+            if(colors[i]!=colors[0]){
+                dis = Math.max(dis, i);
+            }
+
+        }
+
+        return dis;
         
     }
 }
