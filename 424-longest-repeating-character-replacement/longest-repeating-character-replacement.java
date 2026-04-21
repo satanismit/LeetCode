@@ -1,32 +1,36 @@
 class Solution {
+
     public int characterReplacement(String s, int k) {
-        
-        //length - max_f = no of swaps
 
-        int n=s.length();
-        int left =0,right=0,max_f=0,max_len=0;
+        int n= s.length();
 
-        Map<Character, Integer> map=new HashMap<>();
+        int left = 0, right = 0;
 
-        while(right < n){
+        int max_fre=0;
+        int ans = 0;
 
-            map.put( s.charAt(right), map.getOrDefault(s.charAt(right),0)+1);//update freq
-             
-            max_f = Math.max(max_f, map.get(s.charAt(right))); //max frequency 
+        Map<Character, Integer> map = new HashMap<>();
 
-            if((right-left+1)-max_f> k){
-                 
-                 map.put( s.charAt(left), map.get(s.charAt(left))-1);
-                 left++;
+        while(right<n){
+
+            map.put(s.charAt(right), map.getOrDefault(s.charAt(right),0)+1); // update frequency 
+
+            max_fre = Math.max(max_fre, map.get(s.charAt(right)));
+
+            //length - max_fre = no of swaps 
+            while(right-left+1 - max_fre > k){
+
+                map.put(s.charAt(left), map.get(s.charAt(left))-1);
+                left++;
             }
 
-            max_len = Math.max(max_len,right-left+1);
-        
-            right++;
+            ans = Math.max(ans, right-left+1 );
 
+            right++;
 
         }
 
-        return max_len;
+        return ans;
+        
     }
 }
