@@ -1,36 +1,27 @@
 class Solution {
-
     public int hIndex(int[] citations) {
-
+        
         int n= citations.length;
 
-        Arrays.sort(citations);
+        int left = 0;
+        int right=1001;
 
-        int[] bucket = new int[n+1];
+        while(left<right){
 
-        for(int i=0; i<n; i++){
+            int mid = left+ (right-left+1)/2;
 
-            if(citations[i]>=n){
-                bucket[ n ]++;
-            }else{
-
-                bucket[ citations[i]]++;
+            int count=0;
+            
+            for(int c:citations){
+                if(c>=mid)  count++;
             }
+
+            if(count>=mid)   left =mid;
+            else   right=mid-1;
+
+
         }
 
-        int count =0;
-        
-        //check from last to get max 
-        for(int i=n; i>=0; i--){
-
-            count += bucket[i];
-
-            if(count>=i){
-                return i;
-            }
-        }
-
-        return 0;
-        
+        return left;
     }
 }
