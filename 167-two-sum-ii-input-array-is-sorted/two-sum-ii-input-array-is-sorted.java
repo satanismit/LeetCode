@@ -1,40 +1,22 @@
 class Solution {
 
-
     public int[] twoSum(int[] numbers, int target) {
+        
+        int left = 0;
+        int right = numbers.length - 1;
 
-        int n= numbers.length;
+        while (left < right) {
+            int sum = numbers[left] + numbers[right];
 
-        int[] res = new int[2];
-
-        for(int i=0; i<n; i++){
-
-            int ele = numbers[i];  //fix ele
-
-            int left =i+1;
-            int right=n-1;
-
-            while(left<=right){
-
-                int mid = left+(right-left)/2;
-
-                if(ele+numbers[mid]==target){
-                    res[0]=i+1;
-                    res[1]=mid+1;
-                    return res;
-                }
-                else if( ele+numbers[mid] > target){
-
-                    right = mid-1;
-                }else{
-                    left = mid +1;
-                }
+            if (sum == target) {
+                return new int[]{left + 1, right + 1};
+            } else if (sum < target) {
+                left++;   // need bigger sum
+            } else {
+                right--;  // need smaller sum
             }
-
-            
         }
-        
-        return res;
-        
+
+        return new int[]{-1, -1}; // not found
     }
 }
