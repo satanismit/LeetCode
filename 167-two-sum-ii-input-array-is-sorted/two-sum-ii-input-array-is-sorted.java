@@ -5,25 +5,36 @@ class Solution {
 
         int n= numbers.length;
 
-        int[] ans = new int[2];
+        int[] res = new int[2];
 
-        int left = 0, right=n-1;
+        for(int i=0; i<n; i++){
 
-        while(left<right){
+            int ele = numbers[i];  //fix ele
 
-            if(numbers[left]+numbers[right]==target){
+            int left =i+1;
+            int right=n-1;
 
-                return new int[]{left+1, right+1};
+            while(left<=right){
+
+                int mid = left+(right-left)/2;
+
+                if(ele+numbers[mid]==target){
+                    res[0]=i+1;
+                    res[1]=mid+1;
+                    return res;
+                }
+                else if( ele+numbers[mid] > target){
+
+                    right = mid-1;
+                }else{
+                    left = mid +1;
+                }
             }
-            if(numbers[right]+numbers[left]>target){
-                right--;
-            }else{
-                left++;
-            }
+
+            
         }
-
-        return new int[0];
-
+        
+        return res;
         
     }
 }
