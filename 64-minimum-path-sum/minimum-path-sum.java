@@ -1,7 +1,6 @@
 class Solution {
 
-    //tabulation method 
-    
+    //tabulation method : TC: O(n) , SC: O(n)
     public int minPathSum(int[][] grid) {
 
         int n= grid.length;
